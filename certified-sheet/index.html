@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certified Sheet — Topre America</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --surface2: #222636;
+    --surface3: #2a2f45;
+    --accent: #3d6fff;
+    --accent2: #ff6b35;
+    --accent3: #00d4aa;
+    --text: #e8ecf4;
+    --text2: #8b92a8;
+    --text3: #5a6080;
+    --border: rgba(255,255,255,0.07);
+    --shadow: 0 8px 32px rgba(0,0,0,0.4);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    position: relative;
+  }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 20% -10%, rgba(61,111,255,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 85% 110%, rgba(255,107,53,0.08) 0%, transparent 55%);
+    pointer-events: none; z-index: 0;
+  }
+
+  #app { position: relative; z-index: 1; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 28px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(15,17,23,0.85);
+    backdrop-filter: blur(12px);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .logo {
+    font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 1.1rem;
+    letter-spacing: 2px; color: var(--text2); text-transform: uppercase;
+  }
+  .logo strong { color: var(--text); font-size: 1.3rem; }
+  .lang-toggle {
+    display: flex; gap: 6px; background: var(--surface2);
+    border-radius: 50px; padding: 4px; border: 1px solid var(--border);
+  }
+  .lang-btn {
+    padding: 6px 16px; border-radius: 50px; border: none;
+    background: transparent; color: var(--text2);
+    font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500;
+    cursor: pointer; letter-spacing: 1px; transition: all 0.2s;
+  }
+  .lang-btn.active { background: var(--accent); color: #fff; box-shadow: 0 2px 12px rgba(61,111,255,0.4); }
+
+  /* ── MAIN LAYOUT ── */
+  .main { flex: 1; display: flex; gap: 28px; padding: 28px; align-items: flex-start; flex-wrap: wrap; }
+
+  /* ── FORM PANEL ── */
+  .form-panel {
+    flex: 1; min-width: 280px; max-width: 400px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .panel-title {
+    font-family: 'Rajdhani', sans-serif; font-size: 1.1rem; font-weight: 700;
+    letter-spacing: 2px; color: var(--text2); text-transform: uppercase;
+    padding-bottom: 12px; border-bottom: 1px solid var(--border);
+  }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow);
+  }
+  .field-group { display: flex; flex-direction: column; gap: 8px; }
+  .field-label {
+    font-size: 0.72rem; font-weight: 500; color: var(--text3);
+    letter-spacing: 1.5px; text-transform: uppercase;
+  }
+  .select-custom {
+    width: 100%; background: var(--surface2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem; padding: 12px 16px;
+    cursor: pointer; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%233d6fff' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 14px center;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .select-custom:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(61,111,255,0.15); }
+
+  .text-input {
+    width: 100%; background: var(--surface2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 0.95rem; padding: 12px 16px;
+    outline: none; transition: border-color 0.2s; resize: vertical;
+  }
+  .text-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(61,111,255,0.15); }
+  .text-input::placeholder { color: var(--text3); }
+
+  .other-row { display: none; }
+  .other-row.visible { display: flex; flex-direction: column; gap: 8px; }
+
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .btn {
+    font-family: 'Rajdhani', sans-serif; font-size: 1rem; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; border: none;
+    border-radius: var(--radius-sm); padding: 14px 28px; cursor: pointer;
+    transition: all 0.2s; outline: none; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 4px 20px rgba(61,111,255,0.35); width: 100%; justify-content: center; }
+  .btn-primary:hover { background: #5580ff; transform: translateY(-1px); }
+  .btn-secondary { background: var(--surface2); color: var(--text2); border: 1px solid var(--border); }
+  .btn-secondary:hover { background: var(--surface3); color: var(--text); }
+  .btn-danger { background: rgba(255,107,53,0.15); color: var(--accent2); border: 1px solid rgba(255,107,53,0.3); }
+  .btn-danger:hover { background: rgba(255,107,53,0.25); }
+
+  /* ── PREVIEW PANEL ── */
+  .preview-panel { flex: 2; min-width: 320px; display: flex; flex-direction: column; gap: 16px; }
+  .preview-header {
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+  .preview-actions { display: flex; gap: 10px; }
+
+  /* ── LETTER SHEET ── */
+  .sheet-wrap {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px; box-shadow: var(--shadow);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Letter size: 8.5 x 11 in = 816 x 1056px at 96dpi
+     We scale it to fit the viewport */
+  .sheet {
+    width: 100%;
+    max-width: 560px;
+    aspect-ratio: 8.5 / 11;
+    background: #fff;
+    color: #000;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+  }
+
+  /* Logo bar */
+  .sheet-logo-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 2% 3%;
+    border-bottom: 2px solid #000;
+    flex-shrink: 0;
+  }
+  .sheet-logo-bar img { height: clamp(28px, 5vw, 52px); object-fit: contain; }
+  .sheet-logo-text {
+    font-family: Arial Black, Arial, sans-serif; font-weight: 900;
+    font-size: clamp(10px, 2.5vw, 22px); font-style: italic;
+    text-align: center; flex: 1; padding: 0 8px;
+  }
+
+  /* TAC-TN bar */
+  .sheet-tac {
+    text-align: center; font-size: clamp(10px, 2.2vw, 20px);
+    font-weight: 700; padding: 1.5% 0;
+    border-bottom: 1px solid #ccc; flex-shrink: 0;
+  }
+
+  /* Body: side tabs + center */
+  .sheet-body {
+    flex: 1; display: flex; flex-direction: row; min-height: 0;
+  }
+
+  .side-tab {
+    width: 6%;
+    background: #555;
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    writing-mode: vertical-rl;
+    font-size: clamp(6px, 1.2vw, 11px);
+    font-weight: 700; letter-spacing: 1px;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    padding: 8px 0;
+    flex-shrink: 0;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .side-tab.right { transform: rotate(0deg); }
+
+  .sheet-center {
+    flex: 1; display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-start;
+    padding: 2% 4%;
+  }
+
+  .cert-hundred {
+    font-size: clamp(28px, 10vw, 88px);
+    font-weight: 900; line-height: 1; text-align: center; margin-top: 2%;
+  }
+  .cert-word {
+    font-size: clamp(16px, 5.5vw, 48px);
+    font-weight: 900; line-height: 1.1; text-align: center;
+  }
+  .cert-for {
+    font-size: clamp(14px, 5vw, 42px);
+    font-weight: 900; text-align: center; margin-top: 2%;
+  }
+
+  .cert-issue-box {
+    width: 100%; border: 2px solid #000;
+    margin-top: 3%; padding: 3% 4%;
+    min-height: 12%;
+    display: flex; align-items: flex-start;
+  }
+  .cert-issue-text {
+    font-size: clamp(10px, 3vw, 26px);
+    font-weight: 700; text-decoration: underline;
+    line-height: 1.2;
+  }
+
+  .cert-empty-box {
+    width: 100%; border: 2px solid #000; border-top: none;
+    min-height: 16%; flex-shrink: 0;
+  }
+
+  /* Footer */
+  .sheet-footer {
+    border-top: 1px solid #ccc; flex-shrink: 0;
+    display: grid; grid-template-columns: 1fr 1fr;
+  }
+  .footer-cell {
+    padding: 2% 4%; font-size: clamp(6px, 1.5vw, 12px);
+    font-weight: 700; border-right: 1px solid #ccc;
+    display: flex; flex-direction: column; gap: 4px;
+  }
+  .footer-cell:last-child { border-right: none; }
+  .footer-line {
+    border-bottom: 1px solid #000; min-height: 16px; margin-top: 4px;
+  }
+
+  /* ── PRINT STYLES ── */
+  @media print {
+    body { background: #fff !important; }
+    body::before { display: none; }
+    .header, .form-panel, .preview-header, .preview-actions, .panel-title { display: none !important; }
+    .main { padding: 0; gap: 0; }
+    .preview-panel { min-width: 100%; }
+    .sheet-wrap { background: #fff; border: none; padding: 0; box-shadow: none; border-radius: 0; }
+    .sheet { max-width: 100%; width: 100%; height: 100vh; border: none; }
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--surface2); border: 1px solid var(--border);
+    border-radius: 50px; padding: 12px 24px; font-size: 0.85rem; color: var(--text);
+    z-index: 300; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    pointer-events: none; white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  @media (max-width: 700px) {
+    .main { padding: 16px; gap: 16px; }
+    .form-panel { max-width: 100%; }
+    .header { padding: 14px 16px; }
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="header">
+    <div class="logo"><strong>Topre America</strong> &nbsp;·&nbsp; Certified Sheet</div>
+    <div style="display:flex;gap:10px;align-items:center;">
+      <a href="../" style="font-size:0.78rem;color:var(--text3);text-decoration:none;letter-spacing:1px;font-family:'Rajdhani',sans-serif;font-weight:600;">← APPS</a>
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('en')">EN</button>
+        <button class="lang-btn" onclick="setLang('es')">ES</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- FORM -->
+    <div class="form-panel">
+      <div class="panel-title" data-i18n="formTitle">Form Setup</div>
+
+      <div class="card">
+        <div class="field-group">
+          <div class="field-label" data-i18n="issueLabel">Issue / Defect</div>
+          <select class="select-custom" id="issueSelect" onchange="onIssueChange()">
+            <option value="">— Select issue —</option>
+            <option value="Cold Weld Barrel Nut">Cold Weld Barrel Nut</option>
+            <option value="Missing Weld">Missing Weld</option>
+            <option value="Incomplete Fusion">Incomplete Fusion</option>
+            <option value="Surface Crack">Surface Crack</option>
+            <option value="Porosity">Porosity</option>
+            <option value="Undercut">Undercut</option>
+            <option value="Overlap">Overlap</option>
+            <option value="OTHER">OTHER (manual)</option>
+          </select>
+        </div>
+        <div class="other-row" id="otherRow" style="margin-top:12px;">
+          <div class="field-label" data-i18n="otherLabel">Describe issue</div>
+          <input type="text" class="text-input" id="otherInput" placeholder="Type issue..." oninput="updateSheet()">
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="row-2">
+          <div class="field-group">
+            <div class="field-label" data-i18n="initialsLabel">Initials <span style="color:var(--text3)">(opt.)</span></div>
+            <input type="text" class="text-input" id="initialsInput" placeholder="e.g. SC" maxlength="6" oninput="updateSheet()" style="text-transform:uppercase;">
+          </div>
+          <div class="field-group">
+            <div class="field-label" data-i18n="dateLabel">Date <span style="color:var(--text3)">(opt.)</span></div>
+            <input type="date" class="text-input" id="dateInput" oninput="updateSheet()">
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="field-group">
+          <div class="field-label" data-i18n="locationLabel">TAC Location</div>
+          <select class="select-custom" id="locationSelect" onchange="updateSheet()">
+            <option value="TAC-TN">TAC-TN</option>
+            <option value="TAC-AL">TAC-AL</option>
+            <option value="TAC-MS">TAC-MS</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="printSheet()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+        <span data-i18n="printBtn">Print / Save PDF</span>
+      </button>
+
+      <button class="btn btn-danger" onclick="clearForm()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg>
+        <span data-i18n="clearBtn">Clear</span>
+      </button>
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="preview-panel">
+      <div class="preview-header">
+        <div class="panel-title" data-i18n="previewTitle">Preview — Letter Size</div>
+      </div>
+      <div class="sheet-wrap">
+        <div class="sheet" id="certSheet">
+
+          <!-- Logo bar -->
+          <div class="sheet-logo-bar">
+            <img src="nissan-logo.png" alt="NISSAN" onerror="this.style.display='none'; this.nextElementSibling.style.paddingLeft='0'">
+            <div class="sheet-logo-text">Topre America Corporation</div>
+            <img src="infiniti-logo.png" alt="INFINITI" onerror="this.style.display='none'">
+          </div>
+
+          <!-- TAC location -->
+          <div class="sheet-tac" id="sheetTAC">TAC-TN</div>
+
+          <!-- Body -->
+          <div class="sheet-body">
+            <div class="side-tab" id="sideTabLeft">—</div>
+
+            <div class="sheet-center">
+              <div class="cert-hundred">100%</div>
+              <div class="cert-word">CERTIFIED</div>
+              <div class="cert-for">FOR</div>
+              <div class="cert-issue-box">
+                <div class="cert-issue-text" id="issueDisplay">—</div>
+              </div>
+              <div class="cert-empty-box"></div>
+            </div>
+
+            <div class="side-tab right" id="sideTabRight">—</div>
+          </div>
+
+          <!-- Footer -->
+          <div class="sheet-footer">
+            <div class="footer-cell">
+              <span data-i18n="initialsLabel">INITIALS:</span>
+              <div class="footer-line" id="footerInitials"></div>
+            </div>
+            <div class="footer-cell">
+              <span data-i18n="dateLabel">DATE:</span>
+              <div class="footer-line" id="footerDate"></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const I18N = {
+  en: {
+    formTitle:"Form Setup", issueLabel:"Issue / Defect", otherLabel:"Describe issue",
+    initialsLabel:"INITIALS:", dateLabel:"DATE:", locationLabel:"TAC Location",
+    printBtn:"Print / Save PDF", clearBtn:"Clear", previewTitle:"Preview — Letter Size",
+  },
+  es: {
+    formTitle:"Configuración", issueLabel:"Defecto / Problema", otherLabel:"Describir problema",
+    initialsLabel:"INICIALES:", dateLabel:"FECHA:", locationLabel:"Ubicación TAC",
+    printBtn:"Imprimir / Guardar PDF", clearBtn:"Limpiar", previewTitle:"Vista Previa — Carta",
+  }
+};
+let lang = 'en';
+
+function setLang(l){
+  lang = l;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.textContent === l.toUpperCase()));
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if(I18N[lang][k]) el.textContent = I18N[lang][k];
+  });
+}
+
+function onIssueChange(){
+  const val = document.getElementById('issueSelect').value;
+  const otherRow = document.getElementById('otherRow');
+  otherRow.classList.toggle('visible', val === 'OTHER');
+  updateSheet();
+}
+
+function updateSheet(){
+  const selectVal = document.getElementById('issueSelect').value;
+  const otherVal  = document.getElementById('otherInput').value.trim();
+  const initials  = document.getElementById('initialsInput').value.trim().toUpperCase();
+  const dateVal   = document.getElementById('dateInput').value;
+  const location  = document.getElementById('locationSelect').value;
+
+  const issue = selectVal === 'OTHER' ? (otherVal || '—') : (selectVal || '—');
+
+  document.getElementById('sheetTAC').textContent = location;
+  document.getElementById('issueDisplay').textContent = issue;
+  document.getElementById('sideTabLeft').textContent  = issue === '—' ? '—' : issue;
+  document.getElementById('sideTabRight').textContent = issue === '—' ? '—' : issue;
+
+  // Footer
+  document.getElementById('footerInitials').textContent = initials;
+  document.getElementById('footerDate').textContent = dateVal
+    ? new Date(dateVal + 'T00:00:00').toLocaleDateString('en-US', {month:'2-digit',day:'2-digit',year:'numeric'})
+    : '';
+}
+
+function printSheet(){
+  const issue = document.getElementById('issueDisplay').textContent;
+  if(issue === '—'){ showToast('⚠️ Select an issue first'); return; }
+  window.print();
+}
+
+function clearForm(){
+  document.getElementById('issueSelect').value = '';
+  document.getElementById('otherInput').value = '';
+  document.getElementById('initialsInput').value = '';
+  document.getElementById('dateInput').value = '';
+  document.getElementById('otherRow').classList.remove('visible');
+  updateSheet();
+}
+
+// Init
+(function(){ updateSheet(); })();
+
+let toastTimer;
+function showToast(msg, dur=2800){
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), dur);
+}
+</script>
+</body>
+</html>
